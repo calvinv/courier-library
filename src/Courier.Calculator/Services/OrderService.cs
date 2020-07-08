@@ -11,6 +11,10 @@ namespace Courier.Calculator.Services
 {
     public class OrderService : IOrderService
     {
+        private const int _smallsDiscountNumber = 4;
+        private const int _mediumsDiscountNumber = 3;
+        private const int _mixedDiscountNumber = 5;
+
         private const int _smallDimension = 10;
         private const decimal _smallWeight = 1m;
 
@@ -108,14 +112,35 @@ namespace Courier.Calculator.Services
 
         private DeliveryOrder CalculateTotalCost(DeliveryOrder deliveryOrder)
         {
-            deliveryOrder.ParcelCost = deliveryOrder.Parcels.Sum(x => x.TotalCost);
+            //var smallParcels = deliveryOrder.Parcels.Where(x => x.Label == "Small Parcel");
+            //var mediumParcels = deliveryOrder.Parcels.Where(x => x.Label == "Medium Parcel");
+            //var largeParcels = deliveryOrder.Parcels.Where(x => x.Label == "Large Parcel");
+            //var extraLargeParcels = deliveryOrder.Parcels.Where(x => x.Label == "Extra LargeParcel");
+            //var heavyParcels = deliveryOrder.Parcels.Where(x => x.Label == "Heavy Parcel");
+
+            //deliveryOrder.MultiParcelDiscount = 0;
+            //deliveryOrder.BaseCost = deliveryOrder.Parcels.Sum(x => x.TotalCost);
+            //var deliveryOrderTotalParcels = deliveryOrder.Parcels;
+
+            //var discountSmalls = (deliveryOrder.Parcels.Count(x => x.Label == "Small Parcel") % _smallsDiscountNumber);
+            //deliveryOrderTotalParcels -= (discountSmalls * _smallsDiscountNumber);
+            //deliveryOrder.MultiParcelDiscount += (discountSmalls * 3);
+
+            //var discountMediums = (deliveryOrder.Parcels.Count(x => x.Label == "Medium Parcel") % _mediumsDiscountNumber);
+            //deliveryOrderTotalParcels -= (discountSmalls * _mediumsDiscountNumber);
+            //deliveryOrder.MultiParcelDiscount += (discountSmalls * 8);
+
+            //var discounts = (deliveryOrderTotalParcels % _mediumsDiscountNumber);
+            //deliveryOrder.MultiParcelDiscount += (discountSmalls * 8);
+
+            deliveryOrder.BaseCost = deliveryOrder.Parcels.Sum(x => x.TotalCost);
 
             if (deliveryOrder.SpeedyShipping)
             {
-                deliveryOrder.SpeedyShippingCost = deliveryOrder.ParcelCost;
+                deliveryOrder.SpeedyShippingCost = deliveryOrder.BaseCost;
             }
 
-            deliveryOrder.TotalCost = deliveryOrder.SpeedyShippingCost + deliveryOrder.ParcelCost;
+            deliveryOrder.TotalCost = deliveryOrder.SpeedyShippingCost + deliveryOrder.BaseCost;
             return deliveryOrder;
         }
 
