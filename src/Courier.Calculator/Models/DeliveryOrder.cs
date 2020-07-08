@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Courier.Calculator.Models
 {
@@ -7,6 +8,8 @@ namespace Courier.Calculator.Models
         public DeliveryOrder(List<Parcel> parcels)
         {
             Parcels = parcels;
+
+            TotalCost = parcels.Sum(x => x.Cost);
         }
 
         public List<Parcel> Parcels { get; private set; }

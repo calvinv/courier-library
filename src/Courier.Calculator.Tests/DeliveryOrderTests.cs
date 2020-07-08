@@ -7,11 +7,11 @@ namespace Courier.Calculator.Tests
 {
     public class DeliveryOrderTests
     {
-        IParcelFactory _parcelFactory;
+        readonly IParcelFactory _parcelFactory;
 
         public DeliveryOrderTests()
         {
-
+            _parcelFactory = new ParcelFactory();
         }
 
         [Fact]
