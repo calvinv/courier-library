@@ -37,7 +37,7 @@ namespace Courier.Calculator.Tests
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 9, 9, 9);
             deliveryOrder = _orderService.ApplySpeedyShipping(deliveryOrder);
 
-            Assert.Equal("Small Parcel, Cost = $3; Total Order = $6", _orderService.PrintOrder(deliveryOrder));
+            Assert.Equal("Small Parcel, Cost = $3; Speedy Shipping Cost = $3; Total Order = $6", _orderService.PrintOrder(deliveryOrder));
         }
 
         [Fact]

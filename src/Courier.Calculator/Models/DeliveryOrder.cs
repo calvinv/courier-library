@@ -12,6 +12,8 @@ namespace Courier.Calculator.Models
 
         public List<Parcel> Parcels { get; set; }
         public decimal TotalCost { get; set; }
+        public decimal ParcelCost { get; set; }
+        public decimal SpeedyShippingCost { get; set; }
 
         public bool SpeedyShipping { get; set; }
     }

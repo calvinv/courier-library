@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -52,27 +53,28 @@ namespace Courier.Calculator.Services
                 deliveryOrder.Parcels.Add(newParcel);
             }
 
-            deliveryOrder.TotalCost = CalculateTotalCost(deliveryOrder);
+            deliveryOrder = CalculateTotalCost(deliveryOrder);
 
             return deliveryOrder;
         }
 
-        private decimal CalculateTotalCost(DeliveryOrder deliveryOrder)
+        private DeliveryOrder CalculateTotalCost(DeliveryOrder deliveryOrder)
         {
-            var total = deliveryOrder.Parcels.Sum(x => x.Cost);
+            deliveryOrder.ParcelCost = deliveryOrder.Parcels.Sum(x => x.Cost);
 
             if (deliveryOrder.SpeedyShipping)
             {
-                return total * 2;
+                deliveryOrder.SpeedyShippingCost = deliveryOrder.ParcelCost;
             }
 
-            return total;
+            deliveryOrder.TotalCost = deliveryOrder.SpeedyShippingCost + deliveryOrder.ParcelCost;
+            return deliveryOrder;
         }
 
         public DeliveryOrder ApplySpeedyShipping(DeliveryOrder deliveryOrder)
         {
             deliveryOrder.SpeedyShipping = true;
-            deliveryOrder.TotalCost = CalculateTotalCost(deliveryOrder);
+            deliveryOrder = CalculateTotalCost(deliveryOrder);
 
             return deliveryOrder;
         }
@@ -84,6 +86,11 @@ namespace Courier.Calculator.Services
             foreach (var parcel in deliveryOrder.Parcels)
             {
                 sb.Append($"{parcel.Label}, Cost = ${parcel.Cost}; ");
+            }
+
+            if (deliveryOrder.SpeedyShipping)
+            {
+                sb.Append($"Speedy Shipping Cost = ${deliveryOrder.SpeedyShippingCost}; ");
             }
 
             sb.Append($"Total Order = ${deliveryOrder.TotalCost}");
