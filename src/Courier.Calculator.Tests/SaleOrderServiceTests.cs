@@ -85,8 +85,8 @@ namespace Courier.Calculator.Tests
 
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 49, 49, 49, 4m);
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 49, 49, 49, 4m);
-            deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 49, 49, 49, 3m); // 8
-            deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 49, 49, 49, 3m); // 8
+            deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 49, 49, 49, 3m);
+            deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 49, 49, 49, 3m);
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 9, 9, 9, 1m);
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 9, 9, 9, 1m);
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 9, 9, 9, 2m);
@@ -100,10 +100,10 @@ namespace Courier.Calculator.Tests
 
             var printedResult = _orderService.PrintOrder(deliveryOrder);
 
-            Assert.Equal("Medium Parcel, Cost = $10; Medium Parcel, Cost = $10; Medium Parcel, Cost = $8; Medium Parcel, Cost = $8; " + // 36
-                "Small Parcel, Cost = $3; Small Parcel, Cost = $3; Small Parcel, Cost = $5; Small Parcel, Cost = $3; " + // 14
-                "Large Parcel, Cost = $15; Large Parcel, Cost = $15; Large Parcel, Cost = $15; " + //45
-                "Extra Large Parcel, Cost = $25; Extra Large Parcel, Cost = $25; Extra Large Parcel, Cost = $25; " +  // 75
+            Assert.Equal("Medium Parcel, Cost = $10; Medium Parcel, Cost = $10; Medium Parcel, Cost = $8; Medium Parcel, Cost = $8; " +
+                "Small Parcel, Cost = $3; Small Parcel, Cost = $3; Small Parcel, Cost = $5; Small Parcel, Cost = $3; " +
+                "Large Parcel, Cost = $15; Large Parcel, Cost = $15; Large Parcel, Cost = $15; " +
+                "Extra Large Parcel, Cost = $25; Extra Large Parcel, Cost = $25; Extra Large Parcel, Cost = $25; " +          
                 "Discount = $19; Total Order = $151", printedResult);
         }
 
