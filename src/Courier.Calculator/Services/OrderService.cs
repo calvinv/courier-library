@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 
 namespace Courier.Calculator.Services
@@ -12,47 +14,27 @@ namespace Courier.Calculator.Services
         private const int _mediumDimension = 50;
         private const int _largeDimension = 100;
 
-        private DeliveryOrder _deliveryOrder;
-
-        public OrderService()
+        public DeliveryOrder AddParcelToOrder(DeliveryOrder deliveryOrder, int length, int breadth, int height)
         {
-            _deliveryOrder = new DeliveryOrder();
-        }
+            if (length < _smallDimension && breadth < _smallDimension && height < _smallDimension)
+            {
+                deliveryOrder.Parcels.Add(new Parcel()
+                {
+                    Length = length,
+                    Breadth = breadth,
+                    Height = height,
+                    ParcelType = ParcelType.Small, 
+                    Cost = 3 });
+            }
 
-        public DeliveryOrder AddParcelToOrder(DeliveryOrder deliveryOrder, int Length, int Breadth, int Height)
-        {
-            throw new NotImplementedException();
-        }
+            deliveryOrder.TotalCost = deliveryOrder.Parcels.Sum(x => x.Cost);
 
-        public decimal GetOrderCost(DeliveryOrder deliveryOrder)
-        {
-            throw new NotImplementedException();
+            return deliveryOrder;
         }
 
         public string PrintOrder(DeliveryOrder deliveryOrder)
         {
             throw new NotImplementedException();
         }
-
-        //public void AddParcelToOrder(Dimensions dimensions)
-        //{
-        //    if (dimensions.Length < _smallDimension && dimensions.Breadth < _smallDimension && dimensions.Height < _smallDimension)
-        //    {
-        //        _deliveryOrder.Parcels.Add(new Parcel(dimensions, ParcelType.Small, 3));
-        //    }
-        //    else if (dimensions.Length < _mediumDimension && dimensions.Breadth < _mediumDimension && dimensions.Height < _mediumDimension)
-        //    {
-        //        _deliveryOrder.Parcels.Add(new Parcel(dimensions, ParcelType.Medium, 8));
-        //    }
-        //    else if (dimensions.Length < _largeDimension && dimensions.Breadth < _largeDimension && dimensions.Height < _largeDimension)
-        //    {
-        //        _deliveryOrder.Parcels.Add(new Parcel(dimensions, ParcelType.Large, 15));
-        //    }
-        //    else
-        //    {
-        //        _deliveryOrder.Parcels.Add(new Parcel(dimensions, ParcelType.ExtraLarge, 25));
-        //    }
-        //}
-
     }
 }

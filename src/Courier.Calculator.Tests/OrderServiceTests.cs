@@ -34,7 +34,7 @@ namespace Courier.Calculator.Tests
 
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 9, 9, 9);
 
-            Assert.Equal(3, _orderService.GetOrderCost(deliveryOrder));
+            Assert.Equal(3, deliveryOrder.TotalCost);
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace Courier.Calculator.Tests
 
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 9, 9, 9);
 
-            Assert.Equal(8, _orderService.GetOrderCost(deliveryOrder));
+            Assert.Equal(8, deliveryOrder.TotalCost);
         }
 
         [Fact]
@@ -54,7 +54,7 @@ namespace Courier.Calculator.Tests
 
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 9, 9, 9);
 
-            Assert.Equal(15, _orderService.GetOrderCost(deliveryOrder));
+            Assert.Equal(15, deliveryOrder.TotalCost);
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace Courier.Calculator.Tests
 
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 9, 9, 9);
 
-            Assert.Equal(25, _orderService.GetOrderCost(deliveryOrder));
+            Assert.Equal(25, deliveryOrder.TotalCost);
         }
     }
 }
