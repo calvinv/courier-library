@@ -4,16 +4,11 @@ namespace Courier.Calculator.Models
 {
     public class Parcel
     {
-        public Parcel(Dimensions dimensions, ParcelType parcelType, decimal cost)
-        {
-            Dimensions = dimensions;
-            ParcelType = parcelType;
-            Cost = cost;
-        }
-
-        public ParcelType ParcelType { get; private set; }
-        public decimal Cost { get; private set; }
-        public Dimensions Dimensions { get; set; }
+        public ParcelType ParcelType { get; set; }
+        public decimal Cost { get; set; }
+        public int Length { get; set; }
+        public int Breadth { get; set; }
+        public int Height { get; set; }
     }
 
 }
