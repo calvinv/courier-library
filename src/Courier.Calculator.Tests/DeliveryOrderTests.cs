@@ -1,4 +1,5 @@
-﻿using Courier.Calculator.Models;
+﻿using Courier.Calculator.Factory;
+using Courier.Calculator.Models;
 using System.Collections.Generic;
 using Xunit;
 
@@ -6,18 +7,20 @@ namespace Courier.Calculator.Tests
 {
     public class DeliveryOrderTests
     {
+        IParcelFactory _parcelFactory;
+
+        public DeliveryOrderTests()
+        {
+
+        }
+
         [Fact]
         public void DeliveryOrderOf3SmallParcelsShouldCost9Dollars()
         {
-            var threeSmallParcels = new List<Parcel>()
-            {
-                new Parcel() { Dimensions = new Dimensions(9, 9, 9) },
-                new Parcel() { Dimensions = new Dimensions(9, 9, 9) },
-                new Parcel() { Dimensions = new Dimensions(9, 9, 9) }
-            };
+            var smallParcel = _parcelFactory.CreateParcel(new Dimensions(9, 9, 9));
+            var threeSmallParcels = new List<Parcel>() { smallParcel, smallParcel, smallParcel };
 
             var deliveryOrder = new DeliveryOrder(threeSmallParcels);
-
 
             Assert.Equal(9, deliveryOrder.TotalCost);
         }        
