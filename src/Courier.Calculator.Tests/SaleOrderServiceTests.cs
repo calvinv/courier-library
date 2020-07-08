@@ -58,9 +58,10 @@ namespace Courier.Calculator.Tests
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 100, 100, 100, 1m);
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 100, 100, 100, 1m);
 
+            deliveryOrder = _orderService.ApplySpeedyShipping(deliveryOrder);
             var printedResult = _orderService.PrintOrder(deliveryOrder);
 
-            Assert.Equal("Small Parcel, Cost = $3; Medium Parcel, Cost = $8; Large Parcel, Cost = $15; Extra Large Parcel, Cost = $25; Extra Large Parcel, Cost = $25; Discount = $3; Speedy Shipping Cost = $73; Total Order = $146", printedResult);
+            Assert.Equal("Small Parcel, Cost = $3; Medium Parcel, Cost = $8; Large Parcel, Cost = $15; Extra Large Parcel, Cost = $25; Extra Large Parcel, Cost = $25; Speedy Shipping Cost = $73; Discount = $3; Total Order = $146", printedResult);
         }
 
         [Fact]
@@ -74,7 +75,7 @@ namespace Courier.Calculator.Tests
 
             var printedResult = _orderService.PrintOrder(deliveryOrder);
 
-            Assert.Equal("Medium Parcel, Cost = $8; Total Order = $8", printedResult);
+            Assert.Equal("Medium Parcel, Cost = $8; Medium Parcel, Cost = $8; Medium Parcel, Cost = $8; Discount = $8; Total Order = $16", printedResult);
         }
 
     }

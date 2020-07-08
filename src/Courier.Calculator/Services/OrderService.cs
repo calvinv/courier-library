@@ -112,35 +112,42 @@ namespace Courier.Calculator.Services
 
         private DeliveryOrder CalculateTotalCost(DeliveryOrder deliveryOrder)
         {
-            //var smallParcels = deliveryOrder.Parcels.Where(x => x.Label == "Small Parcel");
-            //var mediumParcels = deliveryOrder.Parcels.Where(x => x.Label == "Medium Parcel");
-            //var largeParcels = deliveryOrder.Parcels.Where(x => x.Label == "Large Parcel");
-            //var extraLargeParcels = deliveryOrder.Parcels.Where(x => x.Label == "Extra LargeParcel");
-            //var heavyParcels = deliveryOrder.Parcels.Where(x => x.Label == "Heavy Parcel");
+            deliveryOrder.MultiParcelDiscount = 0;
 
-            //deliveryOrder.MultiParcelDiscount = 0;
-            //deliveryOrder.BaseCost = deliveryOrder.Parcels.Sum(x => x.TotalCost);
-            //var deliveryOrderTotalParcels = deliveryOrder.Parcels;
+            var smallParcels = deliveryOrder.Parcels.Where(x => x.Label == "Small Parcel").OrderBy(x => x.TotalCost);
+            var mediumParcels = deliveryOrder.Parcels.Where(x => x.Label == "Medium Parcel").OrderBy(x => x.TotalCost);
+            var largeParcels = deliveryOrder.Parcels.Where(x => x.Label == "Large Parcel").OrderBy(x => x.TotalCost);
+            var extraLargeParcels = deliveryOrder.Parcels.Where(x => x.Label == "Extra Large Parcel").OrderBy(x => x.TotalCost);
+            var heavyParcels = deliveryOrder.Parcels.Where(x => x.Label == "Heavy Parcel").OrderBy(x => x.TotalCost);
 
-            //var discountSmalls = (deliveryOrder.Parcels.Count(x => x.Label == "Small Parcel") % _smallsDiscountNumber);
-            //deliveryOrderTotalParcels -= (discountSmalls * _smallsDiscountNumber);
-            //deliveryOrder.MultiParcelDiscount += (discountSmalls * 3);
+            var discountSmalls = smallParcels.Count() / _smallsDiscountNumber;
+            deliveryOrder.MultiParcelDiscount += smallParcels.Take(discountSmalls).Sum(x => x.TotalCost);
+            var leftOverSmallParcels = smallParcels.Skip(discountSmalls);
 
-            //var discountMediums = (deliveryOrder.Parcels.Count(x => x.Label == "Medium Parcel") % _mediumsDiscountNumber);
-            //deliveryOrderTotalParcels -= (discountSmalls * _mediumsDiscountNumber);
-            //deliveryOrder.MultiParcelDiscount += (discountSmalls * 8);
+            var discountMediums = mediumParcels.Count() / _mediumsDiscountNumber;
+            deliveryOrder.MultiParcelDiscount += mediumParcels.Take(discountMediums).Sum(x => x.TotalCost);
+            var leftOverMediumParcels = mediumParcels.Skip(discountMediums);
 
-            //var discounts = (deliveryOrderTotalParcels % _mediumsDiscountNumber);
-            //deliveryOrder.MultiParcelDiscount += (discountSmalls * 8);
+            var leftOverParcels = new List<Parcel>();
+            leftOverParcels.AddRange(leftOverSmallParcels);
+            leftOverParcels.AddRange(leftOverMediumParcels);
+            leftOverParcels.AddRange(largeParcels);
+            leftOverParcels.AddRange(extraLargeParcels);
+            leftOverParcels.AddRange(heavyParcels);
 
-            deliveryOrder.BaseCost = deliveryOrder.Parcels.Sum(x => x.TotalCost);
+            var orderedLeftOverParcels = leftOverParcels.OrderBy(x => x.TotalCost);
+            var discountLeftOvers = orderedLeftOverParcels.Count() / _mixedDiscountNumber;
+            deliveryOrder.MultiParcelDiscount += orderedLeftOverParcels.Take(discountLeftOvers).Sum(x => x.TotalCost);
+
+
+            deliveryOrder.BaseCost = deliveryOrder.Parcels.Sum(x => x.TotalCost);            
 
             if (deliveryOrder.SpeedyShipping)
             {
-                deliveryOrder.SpeedyShippingCost = deliveryOrder.BaseCost;
+                deliveryOrder.SpeedyShippingCost = (deliveryOrder.BaseCost - deliveryOrder.MultiParcelDiscount);
             }
 
-            deliveryOrder.TotalCost = deliveryOrder.SpeedyShippingCost + deliveryOrder.BaseCost;
+            deliveryOrder.TotalCost = deliveryOrder.SpeedyShippingCost + deliveryOrder.BaseCost - deliveryOrder.MultiParcelDiscount;
             return deliveryOrder;
         }
 
@@ -164,6 +171,11 @@ namespace Courier.Calculator.Services
             if (deliveryOrder.SpeedyShipping)
             {
                 sb.Append($"Speedy Shipping Cost = ${deliveryOrder.SpeedyShippingCost}; ");
+            }
+
+            if (deliveryOrder.MultiParcelDiscount > 0)
+            {
+                sb.Append($"Discount = ${deliveryOrder.MultiParcelDiscount}; ");
             }
 
             sb.Append($"Total Order = ${deliveryOrder.TotalCost}");
