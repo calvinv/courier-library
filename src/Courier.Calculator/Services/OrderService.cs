@@ -27,24 +27,28 @@ namespace Courier.Calculator.Services
             {
                 newParcel.Cost = 3;
                 newParcel.ParcelType = ParcelType.Small;
+                newParcel.Label = "Small Parcel";
                 deliveryOrder.Parcels.Add(newParcel);
             }
             else if (length < _mediumDimension && breadth < _mediumDimension && height < _mediumDimension)
             {
                 newParcel.Cost = 8;
                 newParcel.ParcelType = ParcelType.Medium;
+                newParcel.Label = "Medium Parcel";
                 deliveryOrder.Parcels.Add(newParcel);
             }
             else if (length < _largeDimension && breadth < _largeDimension && height < _largeDimension)
             {
                 newParcel.Cost = 15;
                 newParcel.ParcelType = ParcelType.Large;
+                newParcel.Label = "Large Parcel";
                 deliveryOrder.Parcels.Add(newParcel);
             }
             else
             {
                 newParcel.Cost = 25;
                 newParcel.ParcelType = ParcelType.ExtraLarge;
+                newParcel.Label = "Extra Large Parcel";
                 deliveryOrder.Parcels.Add(newParcel);
             }
 
@@ -55,7 +59,16 @@ namespace Courier.Calculator.Services
 
         public string PrintOrder(DeliveryOrder deliveryOrder)
         {
-            throw new NotImplementedException();
+            var sb = new StringBuilder();
+
+            foreach (var parcel in deliveryOrder.Parcels)
+            {
+                sb.Append($"{parcel.Label}, Cost = ${parcel.Cost}; ");
+            }
+
+            sb.Append($"Total Order = ${deliveryOrder.TotalCost}");
+
+            return sb.ToString();
         }
     }
 }
