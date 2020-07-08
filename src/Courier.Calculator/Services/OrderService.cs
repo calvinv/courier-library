@@ -121,12 +121,14 @@ namespace Courier.Calculator.Services
             var heavyParcels = deliveryOrder.Parcels.Where(x => x.Label == "Heavy Parcel").OrderBy(x => x.TotalCost);
 
             var discountSmalls = smallParcels.Count() / _smallsDiscountNumber;
+            var smallsRemaining = smallParcels.Count() % _smallsDiscountNumber;
             deliveryOrder.MultiParcelDiscount += smallParcels.Take(discountSmalls).Sum(x => x.TotalCost);
-            var leftOverSmallParcels = smallParcels.Skip(discountSmalls);
+            var leftOverSmallParcels = smallParcels.Skip(discountSmalls).Take(smallsRemaining);
 
             var discountMediums = mediumParcels.Count() / _mediumsDiscountNumber;
-            deliveryOrder.MultiParcelDiscount += mediumParcels.Take(discountMediums).Sum(x => x.TotalCost);
-            var leftOverMediumParcels = mediumParcels.Skip(discountMediums);
+            var mediumsRemaining = mediumParcels.Count() % _mediumsDiscountNumber;
+            deliveryOrder.MultiParcelDiscount += mediumParcels.Take(discountMediums).Sum(x => x.TotalCost);            
+            var leftOverMediumParcels = mediumParcels.Skip(discountMediums).Take(mediumsRemaining);
 
             var leftOverParcels = new List<Parcel>();
             leftOverParcels.AddRange(leftOverSmallParcels);
