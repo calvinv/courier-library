@@ -57,7 +57,7 @@ namespace Courier.Calculator.Services
             return deliveryOrder;
         }
 
-        public DeliveryOrder ApplySpeedShipping(DeliveryOrder deliveryOrder)
+        public DeliveryOrder ApplySpeedyShipping(DeliveryOrder deliveryOrder)
         {
             throw new NotImplementedException();
         }
