@@ -15,13 +15,14 @@ namespace Courier.Calculator.Services
         private const int _mediumDimension = 50;
         private const int _largeDimension = 100;
 
-        public DeliveryOrder AddParcelToOrder(DeliveryOrder deliveryOrder, int length, int breadth, int height)
+        public DeliveryOrder AddParcelToOrder(DeliveryOrder deliveryOrder, int length, int breadth, int height, decimal weight)
         {
             var newParcel = new Parcel()
             {
                 Length = length,
                 Breadth = breadth,
                 Height = height,
+                Weight = weight
             };
 
             if (length < _smallDimension && breadth < _smallDimension && height < _smallDimension)

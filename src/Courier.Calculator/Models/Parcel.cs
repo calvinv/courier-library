@@ -10,6 +10,7 @@ namespace Courier.Calculator.Models
         public int Length { get; set; }
         public int Breadth { get; set; }
         public int Height { get; set; }
+        public decimal Weight { get; set; }
     }
 
 }
