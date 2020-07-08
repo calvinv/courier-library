@@ -7,11 +7,11 @@ using Xunit;
 
 namespace Courier.Calculator.Tests
 {
-    public class OrderServiceTests
+    public class StandardOrderServiceTests
     {
         IOrderService _orderService;
 
-        public OrderServiceTests()
+        public StandardOrderServiceTests()
         {
             _orderService = new OrderService();
         }
@@ -25,7 +25,9 @@ namespace Courier.Calculator.Tests
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 9, 9, 9, 1m);
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 49, 49, 49, 1m);
 
-            Assert.Equal("Small Parcel, Cost = $3; Medium Parcel, Cost = $8; Total Order = $11", _orderService.PrintOrder(deliveryOrder));
+            var printedResult = _orderService.PrintOrder(deliveryOrder);
+
+            Assert.Equal("Small Parcel, Cost = $3; Medium Parcel, Cost = $8; Total Order = $11", printedResult);
         }
 
         [Fact]
@@ -36,20 +38,10 @@ namespace Courier.Calculator.Tests
 
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 9, 9, 9, 1m);
             deliveryOrder = _orderService.ApplySpeedyShipping(deliveryOrder);
+            
+            var printedResult = _orderService.PrintOrder(deliveryOrder);
 
-            Assert.Equal("Small Parcel, Cost = $3; Speedy Shipping Cost = $3; Total Order = $6", _orderService.PrintOrder(deliveryOrder));
-        }
-
-        [Fact]
-        public void HeavySpeedyShippingOrdersShouldDoubleInCost()
-        {
-
-            var deliveryOrder = new DeliveryOrder();
-
-            deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 9, 9, 9, 2m);
-            deliveryOrder = _orderService.ApplySpeedyShipping(deliveryOrder);
-
-            Assert.Equal("Small Parcel, Cost = $5; Speedy Shipping Cost = $5; Total Order = $10", _orderService.PrintOrder(deliveryOrder));
+            Assert.Equal("Small Parcel, Cost = $3; Speedy Shipping Cost = $3; Total Order = $6", printedResult);
         }
 
         [Fact]
@@ -59,7 +51,9 @@ namespace Courier.Calculator.Tests
 
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 9, 9, 9, 1m);
 
-            Assert.Equal("Small Parcel, Cost = $3; Total Order = $3", _orderService.PrintOrder(deliveryOrder));
+            var printedResult = _orderService.PrintOrder(deliveryOrder);
+
+            Assert.Equal("Small Parcel, Cost = $3; Total Order = $3", printedResult);
         }
 
         [Fact]
@@ -69,7 +63,9 @@ namespace Courier.Calculator.Tests
 
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 49, 49, 49, 3m);
 
-            Assert.Equal("Medium Parcel, Cost = $8; Total Order = $8", _orderService.PrintOrder(deliveryOrder));
+            var printedResult = _orderService.PrintOrder(deliveryOrder);
+
+            Assert.Equal("Medium Parcel, Cost = $8; Total Order = $8", printedResult);
         }
 
         [Fact]
@@ -79,7 +75,9 @@ namespace Courier.Calculator.Tests
 
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 99, 99, 99, 6m);
 
-            Assert.Equal("Large Parcel, Cost = $15; Total Order = $15", _orderService.PrintOrder(deliveryOrder));
+            var printedResult = _orderService.PrintOrder(deliveryOrder);
+
+            Assert.Equal("Large Parcel, Cost = $15; Total Order = $15", printedResult);
         }
 
         [Fact]
@@ -89,7 +87,9 @@ namespace Courier.Calculator.Tests
 
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 100, 100, 100, 10m);
 
-            Assert.Equal("Extra Large Parcel, Cost = $25; Total Order = $25", _orderService.PrintOrder(deliveryOrder));
+            var printedResult = _orderService.PrintOrder(deliveryOrder);
+
+            Assert.Equal("Extra Large Parcel, Cost = $25; Total Order = $25", printedResult);
         }
     }
 }

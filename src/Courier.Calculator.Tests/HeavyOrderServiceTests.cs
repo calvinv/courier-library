@@ -26,7 +26,9 @@ namespace Courier.Calculator.Tests
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 9, 9, 9, 2m);
             deliveryOrder = _orderService.ApplySpeedyShipping(deliveryOrder);
 
-            Assert.Equal("Small Parcel, Cost = $5; Speedy Shipping Cost = $5; Total Order = $10", _orderService.PrintOrder(deliveryOrder));
+            var printedResult = _orderService.PrintOrder(deliveryOrder);
+
+            Assert.Equal("Small Parcel, Cost = $5; Speedy Shipping Cost = $5; Total Order = $10", printedResult);
         }
 
         [Fact]
@@ -35,8 +37,10 @@ namespace Courier.Calculator.Tests
             var deliveryOrder = new DeliveryOrder();
 
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 9, 9, 9, 2m);
+            
+            var printedResult = _orderService.PrintOrder(deliveryOrder);
 
-            Assert.Equal("Small Parcel, Cost = $5; Total Order = $5", _orderService.PrintOrder(deliveryOrder));
+            Assert.Equal("Small Parcel, Cost = $5; Total Order = $5", printedResult);
         }
 
         [Fact]
@@ -46,7 +50,9 @@ namespace Courier.Calculator.Tests
 
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 49, 49, 49, 4m);
 
-            Assert.Equal("Medium Parcel, Cost = $10; Total Order = $10", _orderService.PrintOrder(deliveryOrder));
+            var printedResult = _orderService.PrintOrder(deliveryOrder);
+
+            Assert.Equal("Medium Parcel, Cost = $10; Total Order = $10", printedResult);
         }
 
         [Fact]
@@ -56,7 +62,9 @@ namespace Courier.Calculator.Tests
 
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 99, 99, 99, 7m);
 
-            Assert.Equal("Large Parcel, Cost = $17; Total Order = $17", _orderService.PrintOrder(deliveryOrder));
+            var printedResult = _orderService.PrintOrder(deliveryOrder);
+
+            Assert.Equal("Large Parcel, Cost = $17; Total Order = $17", printedResult);
         }
 
         [Fact]
@@ -66,7 +74,9 @@ namespace Courier.Calculator.Tests
 
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 100, 100, 100, 11m);
 
-            Assert.Equal("Extra Large Parcel, Cost = $27; Total Order = $27", _orderService.PrintOrder(deliveryOrder));
+            var printedResult = _orderService.PrintOrder(deliveryOrder);
+
+            Assert.Equal("Extra Large Parcel, Cost = $27; Total Order = $27", printedResult);
         }
 
         [Fact]
@@ -76,7 +86,9 @@ namespace Courier.Calculator.Tests
 
             deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 120, 120, 120, 51m);
 
-            Assert.Equal("Heavy Parcel, Cost = $51; Total Order = $51", _orderService.PrintOrder(deliveryOrder));
+            var printedResult = _orderService.PrintOrder(deliveryOrder);
+
+            Assert.Equal("Heavy Parcel, Cost = $51; Total Order = $51", printedResult);
         }
     }
 }
