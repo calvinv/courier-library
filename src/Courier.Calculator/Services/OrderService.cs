@@ -57,6 +57,11 @@ namespace Courier.Calculator.Services
             return deliveryOrder;
         }
 
+        public DeliveryOrder ApplySpeedShipping(DeliveryOrder deliveryOrder)
+        {
+            throw new NotImplementedException();
+        }
+
         public string PrintOrder(DeliveryOrder deliveryOrder)
         {
             var sb = new StringBuilder();
