@@ -52,14 +52,29 @@ namespace Courier.Calculator.Services
                 deliveryOrder.Parcels.Add(newParcel);
             }
 
-            deliveryOrder.TotalCost = deliveryOrder.Parcels.Sum(x => x.Cost);
+            deliveryOrder.TotalCost = CalculateTotalCost(deliveryOrder);
 
             return deliveryOrder;
         }
 
+        private decimal CalculateTotalCost(DeliveryOrder deliveryOrder)
+        {
+            var total = deliveryOrder.Parcels.Sum(x => x.Cost);
+
+            if (deliveryOrder.SpeedyShipping)
+            {
+                return total * 2;
+            }
+
+            return total;
+        }
+
         public DeliveryOrder ApplySpeedyShipping(DeliveryOrder deliveryOrder)
         {
-            throw new NotImplementedException();
+            deliveryOrder.SpeedyShipping = true;
+            deliveryOrder.TotalCost = CalculateTotalCost(deliveryOrder);
+
+            return deliveryOrder;
         }
 
         public string PrintOrder(DeliveryOrder deliveryOrder)
