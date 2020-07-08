@@ -42,7 +42,7 @@ namespace Courier.Calculator.Tests
         {
             var deliveryOrder = new DeliveryOrder();
 
-            deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 9, 9, 9);
+            deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 49, 49, 49);
 
             Assert.Equal(8, deliveryOrder.TotalCost);
         }
@@ -52,7 +52,7 @@ namespace Courier.Calculator.Tests
         {
             var deliveryOrder = new DeliveryOrder();
 
-            deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 9, 9, 9);
+            deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 99, 99, 99);
 
             Assert.Equal(15, deliveryOrder.TotalCost);
         }
@@ -62,7 +62,7 @@ namespace Courier.Calculator.Tests
         {
             var deliveryOrder = new DeliveryOrder();
 
-            deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 9, 9, 9);
+            deliveryOrder = _orderService.AddParcelToOrder(deliveryOrder, 100, 100, 100);
 
             Assert.Equal(25, deliveryOrder.TotalCost);
         }
